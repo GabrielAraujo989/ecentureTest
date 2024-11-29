@@ -1,0 +1,9 @@
+age(int)
+monthly_income(float)
+open_debts(bool)
+
+SE
+    age > 15 and monthly_income >= 2,500.00 and open_debts = False
+        Vender
+SENÃO
+    Não Vender
