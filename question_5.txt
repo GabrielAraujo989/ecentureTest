@@ -1,0 +1,14 @@
+Erro ao efetuar login 
+
+Ao acessar a pagina de login e fornecer credenciais validas, 
+era esperado passar pela autenticação e acessar a tela "Home" porem
+ao clicar no botão "Entrar" o sistema apresenta a mensagem de erro: "Erro interno do servidor", e não realiza o login.
+
+Outras Informações:
+
+Navegador: Google Chrome versão 0.0.00
+Ambiente de Teste: Staging
+Sistema Operacional: Windows 10
+Hora da Execução: 28/11/2024, 23:00
+Logs: Não foram exibidos detalhes adicionais no console do navegador, mas o erro "500 - Internal Server Error" foi retornado na resposta da API.
+*Foi testado 4 credenciais validas e todas reproduziram o mesmo erro.

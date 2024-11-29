@@ -1,0 +1,60 @@
+Utilizando typescript com Nestjs que tenho mais conhecimento.
+
+crie um andpoint no controlador 
+
+@Get('/products/filter')
+async filterProducts(@Query() query: FilterProductsDto): Promise<Product[]> {
+    return this.productsService.filterProducts(query);
+}
+
+cadicionar ao DTO a classe com as validações 
+
+export class FilterProductsDto {
+    @IsOptional()
+    @IsString()
+    category?: string;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    min_price?: number;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    max_price?: number;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(1)
+    @Max(5)
+    rating?: number;
+}
+
+ajustar o Backend para lidar com as validações
+
+if (filter.min_price && filter.max_price && filter.min_price > filter.max_price) {
+    throw new BadRequestException('min_price não pode ser maior que max_price.');
+}
+
+
+alterar o service para lidar com a nova consulta
+
+async filterProducts(filter: FilterProductsDto): Promise<Product[]> {
+    const query = this.productRepository.createQueryBuilder('product');
+
+    if (filter.category) {
+        query.andWhere('product.category = :category', { category: filter.category });
+    }
+    if (filter.min_price) {
+        query.andWhere('product.price >= :min_price', { min_price: filter.min_price });
+    }
+    if (filter.max_price) {
+        query.andWhere('product.price <= :max_price', { max_price: filter.max_price });
+    }
+    if (filter.rating) {
+        query.andWhere('product.rating >= :rating', { rating: filter.rating });
+    }
+
+    return query.getMany();
+}
